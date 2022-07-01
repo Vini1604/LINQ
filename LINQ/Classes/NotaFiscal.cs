@@ -8,7 +8,7 @@ namespace LINQ.Classes
     class NotaFiscal
     {
         public int Id { get; set; }
-        public int IdCliente { get; set; }
+        public int IdCliente { get; private set; }
         public Cliente Cliente { get; set; }
         public DateTime DataEmissao { get; set; }
         public TipoFreteEnum TipoFrete { get; set; }
@@ -16,6 +16,16 @@ namespace LINQ.Classes
         public NotaFiscal()
         {
 
+        }
+
+        public NotaFiscal(int id, Cliente cliente, DateTime dataEmissao, TipoFreteEnum tipoFrete, StatusNotaEnum status)
+        {
+            Id = id;
+            IdCliente = cliente.Id;
+            Cliente = cliente;
+            DataEmissao = dataEmissao;
+            TipoFrete = tipoFrete;
+            Status = status;
         }
 
         public override string ToString()

@@ -7,9 +7,9 @@ namespace LINQ.Classes
     class ItensNotaFiscal
     {
         public int Id { get; set; }
-        public int IdNotaFiscal { get; set; }
+        public int IdNotaFiscal { get; private set; }
+        public int IdProduto { get; private set; }
         public NotaFiscal NotaFiscal { get; set; }
-        public int IdProduto { get; set; }
         public Produto Produto { get; set; }
         public int Quantidade { get; set; }
         public decimal ValorUnitario { get; set; }
@@ -17,6 +17,17 @@ namespace LINQ.Classes
         public ItensNotaFiscal()
         {
 
+        }
+
+        public ItensNotaFiscal(int id, NotaFiscal notaFiscal, Produto produto, int quantidade, decimal valorUnitario)
+        {
+            Id = id;
+            IdNotaFiscal = notaFiscal.Id;
+            IdProduto = produto.Id;
+            NotaFiscal = notaFiscal;
+            Produto = produto;
+            Quantidade = quantidade;
+            ValorUnitario = valorUnitario;
         }
 
         public decimal CalculaCustoTotal()
