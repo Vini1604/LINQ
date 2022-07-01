@@ -94,13 +94,18 @@ namespace LINQ
             var notas = AgruparItens();
             foreach(var nota in notas)
             {
-                var cabecalhoNota = NotasFiscais.First(x => x.Id == nota.Key);
-                Console.WriteLine(cabecalhoNota);
+                ImprimeCabecalhoNota(nota);
                 foreach (var item in nota)
                 {
                     Console.WriteLine(item);
                 }
             }
+        }
+
+        private static void ImprimeCabecalhoNota(IGrouping<int, ItensNotaFiscal> nota)
+        {
+            var cabecalhoNota = NotasFiscais.First(x => x.Id == nota.Key);
+            Console.WriteLine(cabecalhoNota);
         }
 
         public static IOrderedEnumerable<IGrouping<int, ItensNotaFiscal>> AgruparItens()
