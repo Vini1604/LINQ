@@ -18,5 +18,16 @@ namespace LINQ.Classes
 
         }
 
+        public override string ToString()
+        {
+            StringBuilder cabecalho = new StringBuilder();
+            cabecalho.AppendLine($"********* Pedido {Id} - Emitido em: {DataEmissao:dd/MM/yyyy HH:mm:ss} - Tipo de Frete: {TipoFrete} - Status: {Status}");
+            cabecalho.AppendLine($"Cliente: {IdCliente} - {Cliente.NomeCliente}");
+            cabecalho.AppendLine();
+            cabecalho.AppendLine("--------------- Itens do pedido ---------------");
+            cabecalho.AppendLine("Produto".PadRight(25) + " qtde.".PadRight(10) + " Valor unitario".PadRight(25) + " Total".PadRight(15));
+            return cabecalho.ToString();
+           
+        }
     }
 }

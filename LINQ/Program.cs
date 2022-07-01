@@ -15,16 +15,13 @@ namespace LINQ
         static public List<NotaFiscal> NotasFiscais { get; set; } = new List<NotaFiscal>();
         static void Main(string[] args)
         {
-            // List<Produto> produtos = new List<Produto>();
-            List<Cliente> clientes = new List<Cliente>();
-            List<ItensNotaFiscal> itens = new List<ItensNotaFiscal>();
-            List<NotaFiscal> notasFiscais = new List<NotaFiscal>();
+
 
             Produto produto1 = new Produto { Id = 1, NomeProduto = "Banana" };
             Produto produto2 = new Produto { Id = 2, NomeProduto = "Melancia" };
             Produto produto3 = new Produto { Id = 3, NomeProduto = "Tomate" };
             Produto produto4 = new Produto { Id = 4, NomeProduto = "Maca" };
-            Produto produto5 = new Produto { Id = 5, NomeProduto = "Pepino" };
+            Produto produto5 = new Produto { Id = 5, NomeProduto = "Laranja" };
             Produto produto6 = new Produto { Id = 6, NomeProduto = "Alface" };
             Produto produto7 = new Produto { Id = 7, NomeProduto = "Cebola" };
             Produto produto8 = new Produto { Id = 8, NomeProduto = "Abacaxi" };
@@ -55,12 +52,12 @@ namespace LINQ
 
             ItensNotaFiscal item1 = new ItensNotaFiscal { Id = 1, IdNotaFiscal = nota1.Id, IdProduto = produto1.Id, NotaFiscal = nota1, Produto = produto1, Quantidade = 2, ValorUnitario = 3.50M };
             ItensNotaFiscal item2 = new ItensNotaFiscal { Id = 2, IdNotaFiscal = nota1.Id, IdProduto = produto2.Id, NotaFiscal = nota1, Produto = produto2, Quantidade = 1, ValorUnitario = 7.00M };
-            ItensNotaFiscal item3 = new ItensNotaFiscal { Id = 3, IdNotaFiscal = nota3.Id, IdProduto = cliente3.Id, NotaFiscal = nota3, Produto = produto3, Quantidade = 10, ValorUnitario = 1.50M };
-            ItensNotaFiscal item4 = new ItensNotaFiscal { Id = 4, IdNotaFiscal = nota1.Id, IdProduto = produto4.Id, NotaFiscal = nota1, Produto = produto4, Quantidade = 4, ValorUnitario = 4.00M };
+            ItensNotaFiscal item3 = new ItensNotaFiscal { Id = 3, IdNotaFiscal = nota3.Id, IdProduto = produto3.Id, NotaFiscal = nota3, Produto = produto3, Quantidade = 10, ValorUnitario = 1.50M };
+            ItensNotaFiscal item4 = new ItensNotaFiscal { Id = 4, IdNotaFiscal = nota4.Id, IdProduto = produto4.Id, NotaFiscal = nota4, Produto = produto4, Quantidade = 4, ValorUnitario = 4.00M };
             ItensNotaFiscal item5 = new ItensNotaFiscal { Id = 5, IdNotaFiscal = nota3.Id, IdProduto = produto5.Id, NotaFiscal = nota3, Produto = produto5, Quantidade = 6, ValorUnitario = 0.30M };
             ItensNotaFiscal item6 = new ItensNotaFiscal { Id = 6, IdNotaFiscal = nota1.Id, IdProduto = produto6.Id, NotaFiscal = nota1, Produto = produto6, Quantidade = 12, ValorUnitario = 0.50M };
             ItensNotaFiscal item7 = new ItensNotaFiscal { Id = 7, IdNotaFiscal = nota3.Id, IdProduto = produto7.Id, NotaFiscal = nota3, Produto = produto7, Quantidade = 5, ValorUnitario = 2.00M };
-            ItensNotaFiscal item8 = new ItensNotaFiscal { Id = 8, IdNotaFiscal = nota1.Id, IdProduto = produto8.Id, NotaFiscal = nota1, Produto = produto8, Quantidade = 2, ValorUnitario = 10.50M };
+            ItensNotaFiscal item8 = new ItensNotaFiscal { Id = 8, IdNotaFiscal = nota4.Id, IdProduto = produto8.Id, NotaFiscal = nota4, Produto = produto8, Quantidade = 2, ValorUnitario = 10.50M };
             ItensNotaFiscal item9 = new ItensNotaFiscal { Id = 9, IdNotaFiscal = nota2.Id, IdProduto = produto9.Id, NotaFiscal = nota2, Produto = produto9, Quantidade = 5, ValorUnitario = 3.50M };
             ItensNotaFiscal item10 = new ItensNotaFiscal { Id = 10, IdNotaFiscal = nota10.Id, IdProduto = produto10.Id, NotaFiscal = nota10, Produto = produto10, Quantidade = 1, ValorUnitario = 3.20M };
 
@@ -70,16 +67,85 @@ namespace LINQ
             PopularLista(NotasFiscais, nota1, nota2, nota3, nota4, nota5, nota6, nota7, nota8, nota9, nota10);
             PopularLista(Itens, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10);
 
-            var notasFaturadas = NotasFiscais.Where(x => x.Status == StatusNotaEnum.Faturado).Count();
-            var notasCanceladas = NotasFiscais.Where(x => x.Status == StatusNotaEnum.Cancelado && x.DataEmissao.Date == new DateTime(2022, 05, 13).Date).Count();
-            var primeiraNotaAtiva = NotasFiscais.Where(x => x.Status == StatusNotaEnum.Ativo).OrderBy( x => x.DataEmissao).FirstOrDefault();
-            var quantidade = Itens.Where(x => x.NotaFiscal.Status == StatusNotaEnum.Ativo && x.NotaFiscal.TipoFrete == TipoFreteEnum.CIF).Sum(x => x.Quantidade);
+            string nomeProduto1 = "abacaxi";
+            string nomeProduto2 = "laranja";
 
-            Console.WriteLine(notasFaturadas);
-            Console.WriteLine(notasCanceladas);
-            Console.WriteLine(primeiraNotaAtiva.Id);
-            Console.WriteLine(quantidade);
+            ContarNotasFaturadas();
+            ContarNotasCanceladas();
+            EncontrarPrimeiraNotaAtiva();
+            ContarProdutosNotasCIFAtivas();
+            CustoTotalNotasFOBFaturadas();
+            ContarProdutoXVendido(nomeProduto1);
+            CustoTotalProdutosXYVendido(nomeProduto1, nomeProduto2);
+            ImprimeNotas();
 
+        }
+
+        private static void CustoTotalNotasFOBFaturadas()
+        {
+            decimal valorFaturadoFOB = Itens.Where(x => x.NotaFiscal.Status == StatusNotaEnum.Faturado && x.NotaFiscal.TipoFrete == TipoFreteEnum.FOB).Sum(x => x.CalculaCustoTotal());
+            Console.WriteLine($"Valor total de notas FOB faturadas: R$ {valorFaturadoFOB:F2}");
+        }
+
+        private static void ImprimeNotas()
+        {
+            var notas = AgruparItens();
+            foreach(var nota in notas)
+            {
+                var cabecalhoNota = NotasFiscais.First(x => x.Id == nota.Key);
+                Console.WriteLine(cabecalhoNota);
+                foreach (var item in nota)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+
+        public static IOrderedEnumerable<IGrouping<int, ItensNotaFiscal>> AgruparItens()
+        {
+            var agrupamento = from item in Itens
+                        group item by item.IdNotaFiscal into grupoNotas
+                        orderby grupoNotas.Key ascending
+                        select grupoNotas;
+
+            return agrupamento;
+        }
+
+        private static void CustoTotalProdutosXYVendido(string nomeProduto1, string nomeProduto2)
+        {
+            decimal totalVendido = Itens.Where(x => (x.Produto.NomeProduto.ToUpper().Contains(nomeProduto1.ToUpper()) || x.Produto.NomeProduto.ToUpper().Contains(nomeProduto2.ToUpper())) && x.NotaFiscal.Status == StatusNotaEnum.Faturado).Sum(x => x.CalculaCustoTotal());
+            Console.WriteLine($"Preco total dos itens {nomeProduto1} e {nomeProduto2} vendido: R$ {totalVendido:F2}");
+        }
+
+        private static void ContarProdutoXVendido(string nomeProduto)
+        {
+            int quantidadeItemVendido = Itens.Where(x => x.Produto.NomeProduto.ToUpper().Contains(nomeProduto.ToUpper()) && x.NotaFiscal.Status == StatusNotaEnum.Faturado).Sum(x => x.Quantidade);
+            Console.WriteLine($"Quantidade do item {nomeProduto} vendido: {quantidadeItemVendido}");
+        }
+
+        private static void ContarProdutosNotasCIFAtivas()
+        {
+            int quantidade = Itens.Where(x => x.NotaFiscal.Status == StatusNotaEnum.Ativo && x.NotaFiscal.TipoFrete == TipoFreteEnum.CIF).Sum(x => x.Quantidade);
+            Console.WriteLine($"Produtos com notas CIF Ativas: {quantidade}");
+        }
+
+        private static void EncontrarPrimeiraNotaAtiva()
+        {
+            var primeiraNotaAtiva = NotasFiscais.Where(x => x.Status == StatusNotaEnum.Ativo).OrderBy(x => x.DataEmissao).FirstOrDefault();
+            Console.WriteLine($"Id da primeira nota ativa: {primeiraNotaAtiva.Id}");
+            Console.WriteLine($"Data da primeira nota ativa: {primeiraNotaAtiva.DataEmissao: dd/MM/yyyy}");
+        }
+
+        private static void ContarNotasCanceladas()
+        {
+            int notasCanceladas = NotasFiscais.Where(x => x.Status == StatusNotaEnum.Cancelado && x.DataEmissao.Date == new DateTime(2022, 05, 13).Date).Count();
+            Console.WriteLine($"Notas canceladas: {notasCanceladas}");
+        }
+
+        private static void ContarNotasFaturadas()
+        {
+            int notasFaturadas = NotasFiscais.Where(x => x.Status == StatusNotaEnum.Faturado).Count();
+            Console.WriteLine($"Notas faturadas: {notasFaturadas}");
         }
 
         static void PopularLista<T>(List<T> lista, T objeto1, T objeto2, T objeto3, T objeto4, T objeto5, T objeto6, T objeto7, T objeto8, T objeto9, T objeto10)

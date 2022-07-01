@@ -24,5 +24,12 @@ namespace LINQ.Classes
             Total = ValorUnitario * Quantidade;
             return Total;
         }
+
+        public override string ToString()
+        {
+            StringBuilder itens = new StringBuilder();
+            itens.AppendLine($"{Produto.NomeProduto,-25} {Quantidade, -10} {ValorUnitario, -25} {CalculaCustoTotal().ToString("F2"), -15}");
+            return itens.ToString();
+        }
     }
 }
